@@ -1,5 +1,5 @@
 {
-  "name": "pwa-test",
+  "name": "upp-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,11 +10,15 @@
     "serve": "serve dist -l 5000"
   },
   "dependencies": {
+    "install": "^0.13.0",
+    "npm": "^9.6.7",
     "serve": "^14.2.0",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "^4.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
+    "sass": "^1.62.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vite-plugin-mkcert": "^1.14.1",

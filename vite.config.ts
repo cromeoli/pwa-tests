@@ -5,7 +5,11 @@ import mkcert from 'vite-plugin-mkcert'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: { https: true },
+  server: {
+    host:true,
+    port:3000, // Este es el puerto que usa Docker
+    https: false
+  },
   plugins: [
     vue(),
     VitePWA({
