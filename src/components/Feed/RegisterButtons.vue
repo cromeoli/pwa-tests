@@ -2,15 +2,15 @@
 export default {
     data() {
         return {
-            isClicked: null
+            isClicked: 0
         }
     },
     methods: {
 
-        buttonPress(buttonId) {
+        buttonPress(buttonId: number) {
             this.isClicked= buttonId;
             setTimeout(() => {
-                this.isClicked= null;
+                this.isClicked= 0;
             }, 500);
         }
     }
