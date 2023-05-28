@@ -1,6 +1,5 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import bcrypt from "bcryptjs";
 import axios from "axios";
 
 export default defineComponent({
@@ -26,11 +25,7 @@ export default defineComponent({
 
             axios.get(`http://localhost:3003/api/v1/users/email/${this.email}`)
                 .then(response => {
-                    if(response.data){
-                        this.emailInUse = true
-                    } else {
-                        this.emailInUse = false
-                    }
+                    this.emailInUse = !!response.data;
                 })
 
             emailRegex.test(this.email) ?
