@@ -27,7 +27,7 @@ name: "RegisterForm.vue",
         toggleVisibility(){
             this.visibility = !this.visibility;
         },
-        hashPassword(password){
+        hashPassword(password:string){
             const saltRounds = 5;
             return bcrypt.hashSync(password, saltRounds);
         },

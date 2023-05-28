@@ -60,11 +60,13 @@ export default defineComponent({
                     this.loged = true
                     this.$emit("isLoged")
                 }
-            } catch (error) {
+            } catch (error: any) {
                 if (error.response.status === 401) {
                     this.loginError = true
-                    console.error("Unauthorized");      return;
-                }    console.error(error);
+                    console.error("Unauthorized");
+                    return;
+                }
+                console.error(error);
             }
         }
     }
