@@ -9,6 +9,7 @@ export default {
 
         buttonPress(buttonId: number) {
             this.isClicked= buttonId;
+            this.$emit('buttonPressed', buttonId);
             setTimeout(() => {
                 this.isClicked= 0;
             }, 500);

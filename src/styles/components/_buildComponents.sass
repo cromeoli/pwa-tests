@@ -6,7 +6,7 @@
   border-radius: 12px
   padding: 0.5em 1em
   box-shadow: $co_blackKnight 4px 5px 0 0px
-  transition: .3s
+  transition: 1s
 
 .justified
   justify-content: center
@@ -26,6 +26,13 @@
     font-weight: 400
     max-height: 2.5em
     white-space: nowrap
+    transition: .3s
+    @media (max-width: 380px)
+        font-size: 1.7rem
+    @media (max-width: 350px)
+      font-size: 1.5rem
+    @media (max-width: 350px)
+      font-size: 1.3rem
 
 .mainButton--onTap
   box-shadow: $co_blackKnight 0 0 0 0px
