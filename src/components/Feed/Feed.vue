@@ -1,8 +1,11 @@
 <template>
     <div class="mainFrame">
-        <div>Actividad</div>
+        <Activity v-if="authIsClosed"/>
         <Post v-if="authIsClosed"/>
-        <AuthBox v-else :authClicked="authClicked"/>
+        <AuthBox v-else
+                 :authClicked="authClicked"
+                 @userAuthenticated="closeAuthMenu"
+        />
         <h2 class="uppBox mainButton uppBox--pink justified">
             Global
         </h2>
@@ -14,9 +17,11 @@
 import Post from "./Post.vue";
 import RegisterButtons from "./RegisterButtons.vue";
 import AuthBox from "../Auth/AuthBox.vue";
+import Activity from "../Activity.vue";
 
 export default {
     components: {
+        Activity,
         Post,
         RegisterButtons: RegisterButtons,
         AuthBox: AuthBox,
@@ -33,6 +38,9 @@ export default {
                 this.authIsClosed = !this.authIsClosed;
             }
             this.authClicked = buttonId;
+        },
+        closeAuthMenu() {
+            this.authIsClosed = true;
         }
     }
 };

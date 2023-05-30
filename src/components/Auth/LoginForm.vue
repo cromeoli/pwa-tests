@@ -23,17 +23,12 @@ export default defineComponent({
         validateEmail(){
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-            axios.get(`http://localhost:3003/api/v1/users/email/${this.email}`)
-                .then(response => {
-                    this.emailInUse = !!response.data;
-                })
-
             emailRegex.test(this.email) ?
                 this.notValidEmail = false :
                 this.notValidEmail = true
         },
         validatePassword(){
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=~`[\]{}|:;"'<>?,./])(?=.*[A-Z]).{8,}$/;
 
             console.log(passwordRegex.test(this.password))
 
@@ -44,16 +39,15 @@ export default defineComponent({
             console.log(this.notValidPassword)
         },
         async login() {
-            try { const response = await axios.post('http://localhost:3003/api/v1/auth/users', {
+            try { const response = await axios.post('http://localhost:80/api/user/login', {
                 email: this.email,
-                passwd: this.password
+                password: this.password
             });
                 if (response.status === 200) {
                     this.loginError = false
-                    localStorage.setItem("id", response.data.id)
-                    localStorage.setItem("username", response.data.username)
+                    localStorage.setItem("id", response.data.user.id)
+                    localStorage.setItem("nickname", response.data.user.nickname)
                     this.loged = true
-                    this.$emit("isLoged")
                 }
             } catch (error: any) {
                 if (error.response.status === 401) {
@@ -63,6 +57,11 @@ export default defineComponent({
                 }
                 console.error(error);
             }
+
+            setTimeout(() => {
+                this.loged = false
+                this.$emit("authSuccess")
+            }, 2000);
         }
     }
 })
@@ -116,7 +115,15 @@ export default defineComponent({
                 <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i> La debe contener al menos 8 caracteres, una mayúscula, un
                 símbolo y un número
             </p>
+            <p v-if="loginError" class="error errorPasswd">
+                <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i>
+                Error en el email o contraseña introducidos
+            </p>
         </div>
+
+        <span v-if="loged" class="register__success">
+                ¡Autenticado con éxito!
+        </span>
 
     </form>
 </template>

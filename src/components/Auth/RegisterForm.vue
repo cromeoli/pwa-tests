@@ -34,9 +34,14 @@ name: "RegisterForm.vue",
         validateEmail(){
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-            axios.get(`http://localhost:3003/api/v1/users/email/${this.email}`)
+            axios.get(`http://localhost:80/api/user/checkEmail/${this.email}`)
                 .then(response => {
-                    this.emailInUse = !!response.data;
+                    if(response.data[0]){
+                        this.emailInUse = true
+                        return 0;
+                    } else {
+                        this.emailInUse = false
+                    }
                 })
 
             emailRegex.test(this.email) ?
@@ -44,10 +49,9 @@ name: "RegisterForm.vue",
                 this.notValidEmail = true
         },
         validatePassword(){
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+            const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=~`[\]{}|:;"'<>?,./])(?=.*[A-Z]).{8,}$/;
 
             console.log(passwordRegex.test(this.password))
-
 
             passwordRegex.test(this.password) ?
                 this.notValidPassword = false :
@@ -63,9 +67,9 @@ name: "RegisterForm.vue",
         validateNick(){
             const nickRegex = /^[^\s]{2,15}$/;
 
-            axios.get(`http://localhost:3003/api/v1/users/user/${this.nick}`)
+            axios.get(`http://localhost:80/api/user/checkNickname/${this.nick}`)
                 .then(response => {
-                    if(response.data){
+                    if(response.data[0]){
                         this.nickIcon = "error"
                         this.nicknameInUse = true
                         return 0;
@@ -80,22 +84,22 @@ name: "RegisterForm.vue",
                 this.notValidNick = true
         },
         registerUser(){
-            axios.post('http://localhost:3003/api/v1/users', {
-                username: this.nick,
+            axios.post('http://localhost:80/api/user/register', {
+                nickname: this.nick,
                 email: this.email,
-                passwd: this.hashPassword(this.password)
+                password: this.password
             })
                 .then(response => {
-                    localStorage.setItem("id", response.data.newUser.id)
-                    localStorage.setItem("username", response.data.newUser.username)
+                    localStorage.setItem("id", response.data.user.id)
+                    localStorage.setItem("nickname", response.data.user.nickname)
                     this.registered = true
-                    this.$emit("isLoged")
                 })
                 .catch(error => console.error(error));
 
             setTimeout(() => {
                 this.registered = false
-            }, 1500);
+                this.$emit("authSuccess")
+            }, 2000);
         }
     }
 })
@@ -161,6 +165,7 @@ name: "RegisterForm.vue",
                     && !nicknameInUse
                     && !emailInUse"
                 class="register__button"
+                :class="{ 'register__button--onTap': registered }"
                 @click="registerUser"
                 type="button"
         >
@@ -191,6 +196,10 @@ name: "RegisterForm.vue",
                 <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i> Las contraseñas no coinciden
             </p>
         </div>
+        <span v-if="registered" class="register__success">
+                ¡Registrado con éxito! ¡Bienvenido a Upp!
+        </span>
+
 
     </form>
 </template>

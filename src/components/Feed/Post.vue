@@ -3,7 +3,7 @@
 </script>
 
 <template>
-         <div class="uppBox uppBox--pink post">
+         <div class="uppBox scrollableUppbox uppBox--pink post">
              <div class="post__iconBox">
                 <i class="material-icons">pause</i>
              </div>

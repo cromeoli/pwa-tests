@@ -13,6 +13,11 @@ export default defineComponent({
             selectedMenu: 0
         };
     },
+    methods: {
+        authSuccess() {
+            this.$emit('userAuthenticated');
+        }
+    },
 
     components: {
         RegisterForm: RegisterForm,
@@ -28,8 +33,8 @@ export default defineComponent({
         :class="{ 'uppBox--white': authClicked == 1 }"
   >
 
-      <RegisterForm v-if="authClicked == 2"/>
-      <LoginForm v-if="authClicked == 1"/>
+      <RegisterForm v-if="authClicked == 2" @authSuccess="authSuccess"/>
+      <LoginForm v-if="authClicked == 1" @authSuccess="authSuccess"/>
 
   </div>
 
