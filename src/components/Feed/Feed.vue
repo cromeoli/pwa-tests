@@ -1,5 +1,5 @@
 <template>
-    <div class="mainFrame">
+    <main class="mainFrame">
         <Activity v-if="authIsClosed"/>
         <Post v-if="authIsClosed"/>
         <AuthBox v-else
@@ -10,7 +10,8 @@
             Global
         </h2>
         <RegisterButtons @buttonPressed="toggleAuthMenu"/>
-    </div>
+
+    </main>
 </template>
 
 <script lang="ts">
