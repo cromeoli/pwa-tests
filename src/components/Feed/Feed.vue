@@ -1,16 +1,23 @@
 <template>
     <main class="mainFrame">
-        <Activity v-if="authIsClosed"/>
         <Post v-if="authIsClosed"/>
         <AuthBox v-else
                  :authClicked="authClicked"
-                 @userAuthenticated="closeAuthMenu"
+                 @userAuthenticated="userAuthenticated = true"
+                 @closeMenu="closeAuthMenu"
         />
-        <h2 class="uppBox mainButton uppBox--pink justified">
-            Global
-        </h2>
-        <RegisterButtons @buttonPressed="toggleAuthMenu"/>
 
+        <CircleSelector v-if="!userAuthenticated"/>
+        <CircleMenu v-if="circleMenuIsOpen"
+                    :class="{'circleMenu--height': circleMenuAnimation}"
+        />
+
+        <Navigation v-if="userAuthenticated"
+                    @toggledCircleMenu="toggleCircleMenu"
+        >
+
+        </Navigation>
+        <RegisterButtons v-else @buttonPressed="toggleAuthMenu"/>
     </main>
 </template>
 
@@ -19,9 +26,15 @@ import Post from "./Post.vue";
 import RegisterButtons from "./RegisterButtons.vue";
 import AuthBox from "../Auth/AuthBox.vue";
 import Activity from "../Activity.vue";
+import Navigation from "../Navigation.vue";
+import CircleSelector from "../CircleSelector.vue";
+import CircleMenu from "../CircleMenu.vue";
 
 export default {
     components: {
+        CircleMenu,
+        CircleSelector,
+        Navigation,
         Activity,
         Post,
         RegisterButtons: RegisterButtons,
@@ -31,6 +44,9 @@ export default {
         return {
             authClicked: 0,
             authIsClosed: true,
+            userAuthenticated: false,
+            circleMenuIsOpen: false,
+            circleMenuAnimation: false
         };
     },
     methods: {
@@ -41,7 +57,26 @@ export default {
             this.authClicked = buttonId;
         },
         closeAuthMenu() {
+            console.log("closeAuthMenu");
             this.authIsClosed = true;
+        },
+        toggleCircleMenu() {
+            //if the menu is closed, open it, wait and start the animation.
+            if (!this.circleMenuIsOpen) {
+                this.circleMenuIsOpen = true;
+                setTimeout(() => {
+                    this.circleMenuAnimation = true;
+                }, 100);
+            } else {
+                // If is open, turn false the animation, wait and then close it
+                this.circleMenuAnimation = false;
+                setTimeout(() => {
+                    this.circleMenuIsOpen = false;
+                }, 1000);
+            }
+
+
+
         }
     }
 };

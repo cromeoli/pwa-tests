@@ -18,6 +18,7 @@ name: "RegisterForm.vue",
             notEqualPasswords: false,
             nicknameInUse: false,
             emailInUse: false,
+            serverError: false,
             nickIcon: "verified",
             noErrors: true,
             registered: false
@@ -90,16 +91,24 @@ name: "RegisterForm.vue",
                 password: this.password
             })
                 .then(response => {
-                    localStorage.setItem("id", response.data.user.id)
-                    localStorage.setItem("nickname", response.data.user.nickname)
-                    this.registered = true
-                })
-                .catch(error => console.error(error));
+                    if (response.status === 200) {
+                        localStorage.setItem("id", response.data.user.id)
+                        localStorage.setItem("nickname", response.data.user.nickname)
+                        this.registered = true
+                        this.noErrors = true
 
-            setTimeout(() => {
-                this.registered = false
-                this.$emit("authSuccess")
-            }, 2000);
+                        setTimeout(() => {
+                            this.registered = false
+                            this.$emit("authSuccess")
+                        }, 2000);
+                    }else{
+                        this.serverError = true
+                    }
+                })
+                .catch(error => {
+                    console.error(error)
+                    this.serverError = true // Marcar la variable de error en true
+                });
         }
     }
 })
@@ -194,6 +203,11 @@ name: "RegisterForm.vue",
             </p>
             <p v-if="notEqualPasswords" class="error">
                 <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i> Las contraseñas no coinciden
+            </p>
+
+            <p v-if="serverError" class="error">
+                <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i>
+                Error en el servidor
             </p>
         </div>
         <span v-if="registered" class="register__success">

@@ -13,6 +13,7 @@ export default defineComponent({
             notValidPassword: false,
             emailInUse: false,
             loginError: false,
+            serverError: false,
             loged: false
         }
     },
@@ -48,19 +49,21 @@ export default defineComponent({
                     localStorage.setItem("id", response.data.user.id)
                     localStorage.setItem("nickname", response.data.user.nickname)
                     this.loged = true
+                    this.$emit("authSuccess")
                 }
             } catch (error: any) {
                 if (error.response.status === 401) {
                     this.loginError = true
                     console.error("Unauthorized");
                     return;
+                }else{
+                    this.serverError = true
                 }
                 console.error(error);
             }
 
             setTimeout(() => {
                 this.loged = false
-                this.$emit("authSuccess")
             }, 2000);
         }
     }
@@ -118,6 +121,10 @@ export default defineComponent({
             <p v-if="loginError" class="error errorPasswd">
                 <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i>
                 Error en el email o contraseña introducidos
+            </p>
+            <p v-if="serverError" class="error errorPasswd">
+                <i class="material-icons Fill: 1 Weight: 500 Grade: 0 Optical Size: 48">priority_high</i>
+                Error en el servidor
             </p>
         </div>
 

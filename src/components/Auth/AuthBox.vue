@@ -16,6 +16,7 @@ export default defineComponent({
     methods: {
         authSuccess() {
             this.$emit('userAuthenticated');
+            this.$emit('closeMenu');
         }
     },
 

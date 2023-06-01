@@ -16,12 +16,20 @@ export default defineConfig({
       manifest: {
         icons:[
           {
-          src: "/icons/logo.png",
+          src: "src/assets/icon/icon192.png",
           sizes: '512x512',
           type: 'image/png',
           purpose: 'any maskable',
             color: '#F4E401'
+          },
+          {
+            src: "src/assets/icon/icon192.png",
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any maskable',
+            color: '#F4E401'
           }
+
         ],
       },
       registerType: 'autoUpdate'

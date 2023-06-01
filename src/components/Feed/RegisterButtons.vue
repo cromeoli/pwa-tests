@@ -6,7 +6,6 @@ export default {
         }
     },
     methods: {
-
         buttonPress(buttonId: number) {
             this.isClicked= buttonId;
             this.$emit('buttonPressed', buttonId);
@@ -20,7 +19,7 @@ export default {
 </script>
 
 <template>
-    <div class="registerButtonsBox">
+    <div class="uppBoxRow">
         <h3 class="uppBox mainButton uppBox--white justified"
             @click="buttonPress(1)"
             :class="{ 'mainButton--onTap': isClicked == 1 }"

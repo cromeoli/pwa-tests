@@ -1,0 +1,55 @@
+.expandedMainMenu
+  flex: 0 0 100%
+
+.mainMenu
+  position: absolute
+  flex-direction: column
+  align-items: center
+  justify-content: flex-start
+  width: 115%
+  border: $co_blackKnight 3px solid
+  border-radius: 12px
+  box-shadow: $co_blackKnight 4px 5px 0 0px
+  bottom: 0
+  left: -5px
+  transition: 1s
+
+.mainMenu__icon
+  width: 100%
+  height: 100%
+  padding: .6em
+  & svg
+    max-width: 60px
+    max-height: 60px
+
+.mainMenu__closeIcon
+  padding: .5em
+  transition: .5s
+  & svg
+    max-width: 60px
+    max-height: 60px
+
+.mainMenu__icon--anim
+  transition: .5s
+  transform: rotate(180deg)
+
+.open
+  display: flex
+
+.close
+  display: none
+
+
+
+//.openMainMenu
+//  position: fixed
+//  z-index: 3
+//  bottom: 10px
+//  right: .7em
+//  max-width: 18vw
+//  min-height: 40vh
+//  transition: 1s
+//
+//.mainMenu__iconBox
+//  display: flex
+//  flex-direction: column
