@@ -12,7 +12,7 @@ export default defineComponent({
         <div class="circleMenu__circleList scrollableUppbox">
 
         </div>
-        <RouterLink class="circleMenu__findCircles" to #default>
+        <RouterLink class="circleMenu__findCircles" to>
             Encuentra círculos
         </RouterLink>
         <div class="circleMenu__InputWrapper">
@@ -24,7 +24,3 @@ export default defineComponent({
         </div>
     </div>
 </template>
-
-<style scoped>
-
-</style>
