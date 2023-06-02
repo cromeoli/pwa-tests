@@ -1,6 +1,5 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import bcrypt from "bcryptjs";
 import axios from "axios";
 
 export default defineComponent({
@@ -27,10 +26,6 @@ name: "RegisterForm.vue",
     methods: {
         toggleVisibility(){
             this.visibility = !this.visibility;
-        },
-        hashPassword(password:string){
-            const saltRounds = 5;
-            return bcrypt.hashSync(password, saltRounds);
         },
         validateEmail(){
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

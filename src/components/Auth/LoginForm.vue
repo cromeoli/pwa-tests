@@ -17,6 +17,7 @@ export default defineComponent({
             loged: false
         }
     },
+    emits: ["authSuccess"],
     methods: {
         toggleVisibility(){
             this.visibility = !this.visibility;
@@ -49,15 +50,25 @@ export default defineComponent({
                     localStorage.setItem("id", response.data.user.id)
                     localStorage.setItem("nickname", response.data.user.nickname)
                     this.loged = true
-                    this.$emit("authSuccess")
+
+                    setTimeout(() => {
+                        this.$emit("authSuccess")
+                    }, 2000);
                 }
             } catch (error: any) {
+
+                if (error.response === undefined) {
+                    this.serverError = true
+                    console.log("El server error")
+                    return;
+                }
+
                 if (error.response.status === 401) {
                     this.loginError = true
                     console.error("Unauthorized");
                     return;
                 }else{
-                    this.serverError = true
+                    console.log("El server error")
                 }
                 console.error(error);
             }
