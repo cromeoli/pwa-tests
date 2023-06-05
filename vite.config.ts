@@ -14,23 +14,24 @@ export default defineConfig({
     vue(),
     VitePWA({
       manifest: {
+        name: "Upp",
+        short_name: "Upp",
         icons:[
           {
-          src: "src/assets/icon/icon192.png",
+          src: "public/icons/icon512.png",
           sizes: '512x512',
           type: 'image/png',
           purpose: 'any maskable',
-            color: '#F4E401'
           },
           {
-            src: "src/assets/icon/icon192.png",
+            src: "public/icons/icon192.png",
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable',
-            color: '#F4E401'
           }
-
         ],
+        theme_color: "#F4E401",
+        background_color: "#F4E401",
       },
       registerType: 'autoUpdate'
     }),

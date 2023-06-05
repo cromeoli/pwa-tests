@@ -26,9 +26,9 @@ import Post from "./Post.vue";
 import RegisterButtons from "./RegisterButtons.vue";
 import AuthBox from "../Auth/AuthBox.vue";
 import Activity from "../Activity.vue";
-import Navigation from "../Navigation.vue";
-import CircleSelector from "../CircleSelector.vue";
-import CircleMenu from "../CircleMenu.vue";
+import Navigation from "../Navigation/Navigation.vue";
+import CircleSelector from "../Navigation/CircleSelector.vue";
+import CircleMenu from "../Navigation/CircleMenu.vue";
 
 export default {
     components: {

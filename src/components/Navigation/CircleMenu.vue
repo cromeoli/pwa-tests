@@ -1,15 +1,27 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import axios from "axios";
 
 export default defineComponent({
-    name: "CircleMenu"
+    name: "CircleMenu",
+    methods: {
+        getMyCircles(){
+
+
+
+        }
+    }
 })
 </script>
 
 <template>
     <div class="circleMenu uppBox uppBox--blue"
     >
-        <div class="circleMenu__circleList scrollableUppbox">
+        <h2>Mis Círculos</h2>
+
+        <div class="circleMenu__circleList scrollableUppbox"
+        >
+
 
         </div>
 
