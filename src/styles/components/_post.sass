@@ -7,7 +7,11 @@
   font-weight: 400
   padding: .5em 1.2em
   height: 100%
-  transition: 0.3s
+  transition: 0.3s ease-in-out
+  transition-timing-function: cubic-bezier(.4,0,.2,1)
+  transition-duration: .3s
+  transition-property: transform
+
 
 .post__authorData
   display: flex
