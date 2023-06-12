@@ -1,14 +1,27 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import axios from "axios";
+import {apiService} from "../../services/apiService.ts";
+import {Circle} from "../../models/Circles.ts";
 
 export default defineComponent({
     name: "CircleMenu",
+    emits: ["currentCircle"],
+    mounted() {
+        this.getMyCircles()
+    },
+    data() {
+        return {
+            myCircles: [] as Circle[],
+            API: new apiService(),
+            colors: ["47F03B", "867CE9", "F560B8", "F4E401"]
+        }
+    },
     methods: {
         getMyCircles(){
-
-
-
+            this.API.getMyCircles()
+                .then(response => {
+                    this.myCircles = response.data.circles
+                })
         }
     }
 })
@@ -21,8 +34,13 @@ export default defineComponent({
 
         <div class="circleMenu__circleList scrollableUppbox"
         >
-
-
+            <div class="uppBox "
+                v-for="circle in myCircles" :key="circle.id"
+                @click="$emit('currentCircle', circle.id)"
+                 :style="{backgroundColor: '#' + colors[Math.floor(Math.random() * colors.length)]}"
+            >
+                <h3>{{ circle.name }}</h3>
+            </div>
         </div>
 
         <RouterLink to="/test" class="circleMenu__findCircles">

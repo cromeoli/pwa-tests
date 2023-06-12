@@ -14,7 +14,9 @@ export default {
     },
     methods: {
         setupHammer() {
-            const hammertime = new Hammer.Manager(this.$refs.post);
+
+            const postElement = this.$refs.post as HTMLElement;
+            const hammertime = new Hammer.Manager(postElement);
 
             hammertime.add(
                 new Hammer.Pan({
@@ -25,9 +27,7 @@ export default {
             );
 
             hammertime.on('pan', (event) => {
-                this.offset = event.deltaY / this.$refs.post!.clientHeight;
-
-                console.log(this.$refs.post!.clientHeight)
+                this.offset = event.deltaY / window.innerHeight;
                 console.log(this.offset);
             });
 

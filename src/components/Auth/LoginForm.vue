@@ -1,6 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import axios from "axios";
+import {apiService} from "../../services/apiService.ts";
 
 export default defineComponent({
     name: "RegisterForm.vue",
@@ -14,7 +14,8 @@ export default defineComponent({
             emailInUse: false,
             loginError: false,
             serverError: false,
-            loged: false
+            loged: false,
+            API: new apiService()
         }
     },
     emits: ["authSuccess"],
@@ -41,37 +42,29 @@ export default defineComponent({
             console.log(this.notValidPassword)
         },
         async login() {
-            try { const response = await axios.post('http://localhost:80/api/user/login', {
-                email: this.email,
-                password: this.password
-            });
-                if (response.status === 200) {
-                    this.loginError = false
-                    localStorage.setItem("id", response.data.user.id)
-                    localStorage.setItem("nickname", response.data.user.nickname)
-                    this.loged = true
+            this.API.login(this.email, this.password)
+                .then(response => {
+                    if(response.status === 200){
+                        this.loginError = false
+                        localStorage.setItem("id", response.data.user.id)
+                        localStorage.setItem("nickname", response.data.user.nickname)
+                        localStorage.setItem("token", response.data.token)
+                        this.loged = true
 
-                    setTimeout(() => {
-                        this.$emit("authSuccess")
-                    }, 2000);
-                }
-            } catch (error: any) {
-
-                if (error.response === undefined) {
-                    this.serverError = true
-                    console.log("El server error")
-                    return;
-                }
-
-                if (error.response.status === 401) {
-                    this.loginError = true
-                    console.error("Unauthorized");
-                    return;
-                }else{
-                    console.log("El server error")
-                }
-                console.error(error);
-            }
+                        setTimeout(() => {
+                            this.$emit("authSuccess")
+                        }, 2000);
+                    }
+                }).catch(error => {
+                    if(error.response.status === 401){
+                        this.loginError = true
+                        console.error("Unauthorized");
+                        return;
+                    }else{
+                        console.log("El server error")
+                    }
+                    console.error(error);
+                })
 
             setTimeout(() => {
                 this.loged = false

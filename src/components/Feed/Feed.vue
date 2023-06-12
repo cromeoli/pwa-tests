@@ -46,7 +46,8 @@ export default {
             authIsClosed: true,
             userAuthenticated: false,
             circleMenuIsOpen: false,
-            circleMenuAnimation: false
+            circleMenuAnimation: false,
+            currentCircle: "Global",
         };
     },
     methods: {

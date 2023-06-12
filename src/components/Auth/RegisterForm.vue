@@ -1,6 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import axios from "axios";
+import {apiService} from "../../services/apiService.ts";
 
 export default defineComponent({
 name: "RegisterForm.vue",
@@ -20,9 +20,12 @@ name: "RegisterForm.vue",
             serverError: false,
             nickIcon: "verified",
             noErrors: true,
-            registered: false
+            registered: false,
+            API: new apiService()
         }
     },
+    emits: ["authSuccess"],
+
     methods: {
         toggleVisibility(){
             this.visibility = !this.visibility;
@@ -30,7 +33,7 @@ name: "RegisterForm.vue",
         validateEmail(){
             const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-            axios.get(`http://localhost:80/api/user/checkEmail/${this.email}`)
+            this.API.checkEmail(this.email)
                 .then(response => {
                     if(response.data[0]){
                         this.emailInUse = true
@@ -63,7 +66,7 @@ name: "RegisterForm.vue",
         validateNick(){
             const nickRegex = /^[^\s]{2,15}$/;
 
-            axios.get(`http://localhost:80/api/user/checkNickname/${this.nick}`)
+            this.API.checkNickname(this.nick)
                 .then(response => {
                     if(response.data[0]){
                         this.nickIcon = "error"
@@ -80,15 +83,12 @@ name: "RegisterForm.vue",
                 this.notValidNick = true
         },
         registerUser(){
-            axios.post('http://localhost:80/api/user/register', {
-                nickname: this.nick,
-                email: this.email,
-                password: this.password
-            })
+            this.API.register(this.nick, this.email, this.password)
                 .then(response => {
-                    if (response.status === 200) {
+                    if(response.status === 200){
                         localStorage.setItem("id", response.data.user.id)
                         localStorage.setItem("nickname", response.data.user.nickname)
+                        localStorage.setItem("token", response.data.token)
                         this.registered = true
                         this.noErrors = true
 
@@ -104,6 +104,7 @@ name: "RegisterForm.vue",
                     console.error(error)
                     this.serverError = true // Marcar la variable de error en true
                 });
+            
         }
     }
 })
