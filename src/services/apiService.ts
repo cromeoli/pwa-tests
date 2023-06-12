@@ -61,5 +61,10 @@ export class apiService {
         return this.api.get('/circle/myCircles');
     }
 
+    public async getOneCircle(id: number) {
+        this.setToken();
+        return this.api.get(`/circle/circle/${id}`);
+    }
+
 
 }

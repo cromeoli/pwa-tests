@@ -1,8 +1,15 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {Circle} from "../../models/Circles.ts";
 
 export default defineComponent({
     name: "CircleSelector",
+    props: {
+        currentCircle: {
+            type: Object as () => Circle,
+            required: false
+        },
+    },
     data() {
         return {
             menuIsOpen: false,
@@ -26,6 +33,6 @@ export default defineComponent({
          @click="buttonPress(1)"
           :class="{'mainButton--onTap': isClicked === 1}"
     >
-        Global
+        {{ currentCircle?.name }}
     </div>
 </template>

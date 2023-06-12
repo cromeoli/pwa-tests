@@ -3,6 +3,7 @@ import {defineComponent} from 'vue'
 import CircleSelector from "./CircleSelector.vue";
 import UploadButton from "./UploadButton.vue";
 import MainMenu from "./MainMenu.vue";
+import {Circle} from "../../models/Circles.ts";
 
 export default defineComponent({
     name: "Navigation",
@@ -10,16 +11,14 @@ export default defineComponent({
     data() {
         return {
             circleCollapsed: true,
-            mainMenuCollapsed: true
+            mainMenuCollapsed: true,
+            currentCircle: {} as Circle,
         }
     },
     methods: {
         expandCircle() {
             this.circleCollapsed = !this.circleCollapsed;
             this.$emit("toggledCircleMenu");
-        },
-        expandMainMenu() {
-            this.mainMenuCollapsed = !this.mainMenuCollapsed;
         }
     }
 })

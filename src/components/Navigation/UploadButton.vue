@@ -1,8 +1,15 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {Circle} from "../../models/Circles.ts";
 
 export default defineComponent({
     name: "UploadButton",
+    props: {
+        currentCircle: {
+            type: Object as () => Circle,
+            required: false
+        },
+    },
     data() {
         return {
             isClicked: 0,
@@ -97,7 +104,9 @@ export default defineComponent({
                         <path d="M0 0v3h2c0 1.11-.89 2-2 2v1c1.65 0 3-1.35 3-3v-3h-3zm5 0v3h2c0 1.11-.89 2-2 2v1c1.65 0 3-1.35 3-3v-3h-3z" transform="translate(0 1)" fill="currentColor" />
                     </svg>
                     <textarea class="uploadText__textArea" v-if="expandedMenu[5]"></textarea>
-                    <button v-if="expandedMenu[5]">Send</button>
+                    <button v-if="expandedMenu[5]">
+                        Post in <b>{{ currentCircle?.name }}</b> Circle
+                    </button>
                 </div>
             </div>
 

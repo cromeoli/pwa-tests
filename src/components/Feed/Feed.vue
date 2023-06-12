@@ -6,17 +6,29 @@
                  @userAuthenticated="userAuthenticated = true"
                  @closeMenu="closeAuthMenu"
         />
-
-        <CircleSelector v-if="!userAuthenticated"/>
         <CircleMenu v-if="circleMenuIsOpen"
                     :class="{'circleMenu--height': circleMenuAnimation}"
+                    @currentCircleId="setCurrentCircle"
         />
 
-        <Navigation v-if="userAuthenticated"
-                    @toggledCircleMenu="toggleCircleMenu"
-        >
+        <CircleSelector :class="{'expandedCircleSelector': !circleCollapsed}"
+                        v-if="!userAuthenticated"
+                        :currentCircle="currentCircle"
+        />
 
-        </Navigation>
+
+        <nav class="uppBoxRow" v-if="userAuthenticated">
+            <CircleSelector @click="toggleCircleMenu"
+                            :class="{'expandedCircleSelector': !circleCollapsed}"
+                            v-if="mainMenuCollapsed"
+                            :currentCircle="currentCircle"
+            />
+            <UploadButton v-if="circleCollapsed"
+                          :currentCircle="currentCircle"
+            />
+            <MainMenu v-if="circleCollapsed"/>
+        </nav>
+
         <RegisterButtons v-else @buttonPressed="toggleAuthMenu"/>
     </main>
 </template>
@@ -29,9 +41,14 @@ import Activity from "../Activity.vue";
 import Navigation from "../Navigation/Navigation.vue";
 import CircleSelector from "../Navigation/CircleSelector.vue";
 import CircleMenu from "../Navigation/CircleMenu.vue";
+import {apiService} from "../../services/apiService.ts";
+import {Circle} from "../../models/Circles.ts";
+import UploadButton from "../Navigation/UploadButton.vue";
+import MainMenu from "../Navigation/MainMenu.vue";
 
 export default {
     components: {
+        MainMenu, UploadButton,
         CircleMenu,
         CircleSelector,
         Navigation,
@@ -47,8 +64,15 @@ export default {
             userAuthenticated: false,
             circleMenuIsOpen: false,
             circleMenuAnimation: false,
-            currentCircle: "Global",
+            currentCircle: {} as Circle,
+            loadComplete: false,
+            circleCollapsed: true,
+            mainMenuCollapsed: true,
+            API: new apiService()
         };
+    },
+    beforeMount() {
+            this.setCurrentCircle(1);
     },
     methods: {
         toggleAuthMenu(buttonId: number) {
@@ -62,6 +86,7 @@ export default {
             this.authIsClosed = true;
         },
         toggleCircleMenu() {
+            this.circleCollapsed = !this.circleCollapsed;
             //if the menu is closed, open it, wait and start the animation.
             if (!this.circleMenuIsOpen) {
                 this.circleMenuIsOpen = true;
@@ -75,9 +100,16 @@ export default {
                     this.circleMenuIsOpen = false;
                 }, 1000);
             }
+        },
+        setCurrentCircle(circleId: number) {
+            console.log(circleId);
+            this.API.getOneCircle(circleId).then((response) => {
+                this.currentCircle = response.data.circle;
+            });
+        },
+        expandCircle() {
 
-
-
+            this.$emit("toggledCircleMenu");
         }
     }
 };

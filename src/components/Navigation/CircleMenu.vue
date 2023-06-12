@@ -5,7 +5,7 @@ import {Circle} from "../../models/Circles.ts";
 
 export default defineComponent({
     name: "CircleMenu",
-    emits: ["currentCircle"],
+    emits: ["currentCircleId"],
     mounted() {
         this.getMyCircles()
     },
@@ -13,7 +13,8 @@ export default defineComponent({
         return {
             myCircles: [] as Circle[],
             API: new apiService(),
-            colors: ["47F03B", "867CE9", "F560B8", "F4E401"]
+            colors: ["47F03B", "867CE9", "F560B8", "F4E401"],
+            isClicked: 0,
         }
     },
     methods: {
@@ -22,7 +23,8 @@ export default defineComponent({
                 .then(response => {
                     this.myCircles = response.data.circles
                 })
-        }
+        },
+
     }
 })
 </script>
@@ -36,7 +38,8 @@ export default defineComponent({
         >
             <div class="uppBox "
                 v-for="circle in myCircles" :key="circle.id"
-                @click="$emit('currentCircle', circle.id)"
+                @click="$emit('currentCircleId', circle.id)"
+                 :class="{ 'mainButton--onTap': isClicked == 1 }"
                  :style="{backgroundColor: '#' + colors[Math.floor(Math.random() * colors.length)]}"
             >
                 <h3>{{ circle.name }}</h3>
