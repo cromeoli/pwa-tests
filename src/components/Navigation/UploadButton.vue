@@ -7,24 +7,30 @@ export default defineComponent({
         return {
             isClicked: 0,
             uploadIsOpen: false,
-            animation: false
+            animation: false,
+            expandedMenu: [false,false,false,false]
         }
     },
     methods: {
         buttonPress(buttonId: number) {
             this.isClicked= buttonId;
             this.$emit('buttonPressed', buttonId);
+            this.expandedMenu = [false,false,false,false]
+            this.expandedMenu[buttonId] = true
 
             if(buttonId == 1) {
-                this.uploadIsOpen= true
-                setTimeout(() => {
-                    this.animation= true;
-                }, 1);
+                this.openUploadMenu()
             }
 
             setTimeout(() => {
                 this.isClicked= 0;
             }, 300);
+        },
+        openUploadMenu(){
+            this.uploadIsOpen= true
+            setTimeout(() => {
+                this.animation= true;
+            }, 1);
         },
         closeMenu() {
             this.animation= false;
@@ -51,10 +57,12 @@ export default defineComponent({
         </div>
             <div class="uploadMenu"
                  v-if="uploadIsOpen"
-                 :class="{ 'uploadMenu--animation': animation }"
+                 :class="{ 'uploadMenu--animation': animation,
+                 'tallerUploadMenu': expandedMenu[2] || expandedMenu[3] || expandedMenu[4] || expandedMenu[5]}"
             >
                 <div class="uppBox uppBox--pink uploadImage"
-                     :class="{ 'mainButton--onTap': isClicked == 2 }"
+                     :class="{ 'mainButton--onTap': isClicked == 2,
+                                'expandMenu': expandedMenu[2] }"
                      @click="buttonPress(2)"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
@@ -62,7 +70,8 @@ export default defineComponent({
                     </svg>
                 </div>
                 <div class="uppBox uppBox--blue uploadVideo"
-                     :class="{ 'mainButton--onTap': isClicked == 3 }"
+                     :class="{ 'mainButton--onTap': isClicked == 3,
+                                'expandMenu': expandedMenu[3]}"
                      @click="buttonPress(3)"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
@@ -70,7 +79,8 @@ export default defineComponent({
                     </svg>
                 </div>
                 <div class="uppBox uppBox--yellow uploadAudio"
-                     :class="{ 'mainButton--onTap': isClicked == 4 }"
+                     :class="{ 'mainButton--onTap': isClicked == 4,
+                                'expandMenu': expandedMenu[4]}"
                      @click="buttonPress(4)"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
@@ -79,12 +89,15 @@ export default defineComponent({
                     </svg>
                 </div>
                 <div class="uppBox uppBox--black uploadText"
-                     :class="{ 'mainButton--onTap': isClicked == 5 }"
+                     :class="{ 'mainButton--onTap': isClicked == 5,
+                                'expandMenu': expandedMenu[5]}"
                      @click="buttonPress(5)"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
                         <path d="M0 0v3h2c0 1.11-.89 2-2 2v1c1.65 0 3-1.35 3-3v-3h-3zm5 0v3h2c0 1.11-.89 2-2 2v1c1.65 0 3-1.35 3-3v-3h-3z" transform="translate(0 1)" fill="currentColor" />
                     </svg>
+                    <textarea class="uploadText__textArea" v-if="expandedMenu[5]"></textarea>
+                    <button v-if="expandedMenu[5]">Send</button>
                 </div>
             </div>
 
