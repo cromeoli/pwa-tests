@@ -1,7 +1,3 @@
-export interface Welcome {
-    circles: Circle[];
-}
-
 export interface Circle {
     id:          number;
     name:        string;

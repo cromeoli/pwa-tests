@@ -1,7 +1,3 @@
-export interface Welcome {
-    posts: Post[];
-}
-
 export interface Post {
     id:           number;
     post_content: string;
