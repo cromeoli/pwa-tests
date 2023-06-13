@@ -107,10 +107,7 @@ export default {
                 this.currentCircle = response.data.circle;
             });
         },
-        expandCircle() {
 
-            this.$emit("toggledCircleMenu");
-        }
     }
 };
 </script>

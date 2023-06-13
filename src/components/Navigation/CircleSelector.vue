@@ -34,5 +34,6 @@ export default defineComponent({
           :class="{'mainButton--onTap': isClicked === 1}"
     >
         {{ currentCircle?.name }}
+
     </div>
 </template>
