@@ -66,5 +66,17 @@ export class apiService {
         return this.api.get(`/circle/circle/${id}`);
     }
 
+    ////////// Posts
+
+    public async getPostsByCircle(id: number) {
+        this.setToken();
+        return this.api.get(`/post/postsByCircle/${id}`);
+    }
+
+    ////////// User
+
+    public async getUserInfo(id: number) {
+        return this.api.get(`/user/user/${id}`);
+    }
 
 }

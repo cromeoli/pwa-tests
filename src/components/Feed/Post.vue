@@ -10,15 +10,13 @@
                     <i class="material-icons">pause</i>
                 </div>
                 <div class="post__authorData">
-                    <div>Foto</div>
-                    <h1>Tumbalaka</h1>
+                    <img :src="currentPostInfo.user.avatar" alt="">
+                    <h1> {{ currentPostInfo.user.nickname }} </h1>
                 </div>
                 <div class="post__content">
-                    La vida es una montaña rusa llena de altibajos. A veces estamos en la cima
-                    del mundo, sintiéndonos invencibles, y otras veces estamos en lo más
-                    bajo, sintiéndonos desesperados. Pero lo importante es recordar que las
-                    cosas.
+                    <div v-if="currentPostInfo?.type === 1">{{ currentPostInfo.post_content }}</div>
                 </div>
+                <img class="post__image" v-if="currentPostInfo.type === 2" :src="currentPostInfo?.post_content" alt="">
             </div>
         </div>
         <div :style="{ opacity: opacityUpp }"
@@ -36,15 +34,32 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import Hammer from 'hammerjs'
 import {ref} from '@vue/reactivity'
 import {computed, onMounted} from '@vue/runtime-core'
+import {_Post} from "../../models/Posts.ts";
 
 export default {
-    setup () {
+    props: {
+        currentPostInfo: {
+            type: Object as () => _Post,
+            default: false
+        }
+    },
+    data() {
+        return {
+            opacityUpp: 1,
+            isDismissing: false,
+            offset: 0,
+            card: null,
+            currentUserInfo: {}
+        }
+    },
+    emits: ['changePost'],
+    setup (props,{emit}) {
 
         const card = ref<HTMLElement>()
-
         const offset = ref(0)
         const isDismissing = ref(false)
 
@@ -79,8 +94,10 @@ export default {
                     isDismissing.value = false
                     offset.value = 0
 
-                    if (e.deltaY > 200 || e.velocityY > 0.4) {
-                        console.log("holiiii")
+                    if (e.deltaY > 350 || e.velocityY > 0.4) {
+                        setTimeout(() => {
+                            emit('changePost')
+                        }, 300)
                     }
                 }
             })
@@ -129,7 +146,7 @@ export default {
             isDismissing,
             blurCSS,
             opacity,
-            opacityUpp
+            opacityUpp,
         }
     }
 }

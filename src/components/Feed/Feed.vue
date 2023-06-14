@@ -1,7 +1,11 @@
 <template>
     <main class="mainFrame">
-        <Post v-if="authIsClosed"/>
-        <AuthBox v-else
+        <Post v-if="authIsClosed && posts.length > 0"
+              :currentPostInfo.sync="currentPost"
+              @changePost="nextPost"
+        />
+        <LoadingPost v-if="posts.length <= 0"/>
+        <AuthBox v-if="!authIsClosed"
                  :authClicked="authClicked"
                  @userAuthenticated="userAuthenticated = true"
                  @closeMenu="closeAuthMenu"
@@ -34,7 +38,9 @@
 </template>
 
 <script lang="ts">
+// @ts-nocheck
 import Post from "./Post.vue";
+import LoadingPost from "./LoadingPost.vue";
 import RegisterButtons from "./RegisterButtons.vue";
 import AuthBox from "../Auth/AuthBox.vue";
 import Activity from "../Activity.vue";
@@ -45,6 +51,7 @@ import {apiService} from "../../services/apiService.ts";
 import {Circle} from "../../models/Circles.ts";
 import UploadButton from "../Navigation/UploadButton.vue";
 import MainMenu from "../Navigation/MainMenu.vue";
+import {_Post} from "../../models/Posts.ts";
 
 export default {
     components: {
@@ -56,6 +63,7 @@ export default {
         Post,
         RegisterButtons: RegisterButtons,
         AuthBox: AuthBox,
+        LoadingPost: LoadingPost
     },
     data() {
         return {
@@ -65,14 +73,25 @@ export default {
             circleMenuIsOpen: false,
             circleMenuAnimation: false,
             currentCircle: {} as Circle,
+            currentCircleId: 0,
             loadComplete: false,
             circleCollapsed: true,
             mainMenuCollapsed: true,
+            posts: [] as _Post[],
+            currentPost: {} as _Post,
+            currentPostIndex: 0,
+            currentAuthorData: {},
             API: new apiService()
         };
     },
     beforeMount() {
-            this.setCurrentCircle(1);
+        this.setCurrentCircle(1);
+        this.loadPosts();
+    },
+    watch: {
+        currentCircleId() {
+            this.loadPosts();
+        }
     },
     methods: {
         toggleAuthMenu(buttonId: number) {
@@ -106,8 +125,26 @@ export default {
             this.API.getOneCircle(circleId).then((response) => {
                 this.currentCircle = response.data.circle;
             });
-        },
 
+            this.currentCircleId = circleId;
+        },
+        loadPosts() {
+            this.API.getPostsByCircle(this.currentCircleId).then((response) => {
+                this.posts = response.data.posts;
+                this.setCurrentPost(0);
+            });
+        },
+        setCurrentPost(index: number) {
+            this.currentPost = this.posts[index]
+            this.currentPostIndex = index;
+        },
+        nextPost(){
+            if(this.currentPostIndex < this.posts.length - 1){
+                this.setCurrentPost(this.currentPostIndex + 1);
+            } else {
+                this.setCurrentPost(0);
+            }
+        },
     }
 };
 </script>
