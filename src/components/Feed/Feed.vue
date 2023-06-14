@@ -4,7 +4,7 @@
               :currentPostInfo.sync="currentPost"
               @changePost="nextPost"
         />
-        <LoadingPost v-if="posts.length <= 0"/>
+        <LoadingPost v-if="authIsClosed && posts.length <= 0"/>
         <AuthBox v-if="!authIsClosed"
                  :authClicked="authClicked"
                  @userAuthenticated="userAuthenticated = true"
