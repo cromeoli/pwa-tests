@@ -162,7 +162,8 @@ export default defineComponent({
                 </div>
                 <div class="uppBox uppBox--black uploadText"
                      :class="{ 'mainButton--onTap': isClicked == 5,
-                                'expandMenu': expandedMenu[5]}"
+                                'expandMenu': expandedMenu[5],
+                                'textAreaHeight': expandedMenu[5]}"
                      @click="buttonPress(5)"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">

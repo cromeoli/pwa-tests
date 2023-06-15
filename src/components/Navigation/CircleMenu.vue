@@ -33,18 +33,17 @@ export default defineComponent({
     <div class="circleMenu uppBox uppBox--blue"
     >
         <h2>Mis Círculos</h2>
-
-        <div class="circleMenu__circleList scrollableUppbox"
-        >
-            <div class="uppBox "
-                v-for="circle in myCircles" :key="circle.id"
-                @click="$emit('currentCircleId', circle.id)"
-                 :class="{ 'mainButton--onTap': isClicked == 1 }"
-                 :style="{backgroundColor: '#' + colors[Math.floor(Math.random() * colors.length)]}"
+            <div class="circleMenu__circleList"
             >
-                <h3>{{ circle.name }}</h3>
+                <div class="uppBox "
+                    v-for="circle in myCircles" :key="circle.id"
+                    @click="$emit('currentCircleId', circle.id)"
+                     :class="{ 'mainButton--onTap': isClicked == 1 }"
+                     :style="{backgroundColor: '#' + colors[Math.floor(Math.random() * colors.length)]}"
+                >
+                    <h3>{{ circle.name }}</h3>
+                </div>
             </div>
-        </div>
 
         <RouterLink to="/test" class="circleMenu__findCircles">
             Encuentra círculos
