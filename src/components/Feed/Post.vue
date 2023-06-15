@@ -16,7 +16,9 @@
                 <div class="post__content">
                     <div v-if="currentPostInfo?.type === 1">{{ currentPostInfo.post_content }}</div>
                 </div>
-                <img class="post__image" v-if="currentPostInfo.type === 2" :src="currentPostInfo?.post_content" alt="">
+                <img class="post__image"
+                     v-if="currentPostInfo.type === 2"
+                     :src="imagepath + currentPostInfo?.post_content" alt="">
             </div>
         </div>
         <div :style="{ opacity: opacityUpp }"
@@ -39,6 +41,7 @@ import Hammer from 'hammerjs'
 import {ref} from '@vue/reactivity'
 import {computed, onMounted} from '@vue/runtime-core'
 import {_Post} from "../../models/Posts.ts";
+import {environment} from "../../enviroments/enviroment.ts";
 
 export default {
     props: {
@@ -53,7 +56,8 @@ export default {
             isDismissing: false,
             offset: 0,
             card: null,
-            currentUserInfo: {}
+            currentUserInfo: {},
+            imagepath: environment.IMAGE
         }
     },
     emits: ['changePost'],

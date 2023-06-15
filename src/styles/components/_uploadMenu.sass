@@ -37,6 +37,24 @@
   padding: 2em
   transition: 1s
   transform: translateX(-300%)
+  flex-direction: column
+  position: relative
+  & input
+    position: absolute
+    bottom: 4em
+    width: 100%
+  & label
+    bottom: 1em
+    display: inline-block
+    font-family: $fo_archivo
+    background-color: black
+    color: $co_whiteCartoon
+    padding: 1em
+    border-radius: 12px
+    & svg
+      width: 2em
+      height: 2em
+
 
 
 .uploadVideo
@@ -87,3 +105,17 @@
 
 .uploadMenu--animation > div
   transform: translateX(0%) translateY(0%)
+
+.uploadMenu__confirmButton
+  margin-top: 1em
+  border: 2px solid $co_yellowSimpson
+  padding: .5em 1em
+  background-color: black
+  color: white
+  font-size: 1.1em
+
+.uploadMenu__Wrapper
+  display: flex
+  gap: 1.5em
+  position: absolute
+  bottom: 1em

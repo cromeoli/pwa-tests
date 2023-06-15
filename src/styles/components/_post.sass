@@ -64,3 +64,25 @@
 .uppArrow__flex
   display: flex
 
+.slideDownFadeIn
+  animation: slideDownFadeIn 1.2s ease-in-out forwards
+
+.slideFromAbove
+    animation: slideFromAbove 1.2s ease-in-out forwards
+
+
+@keyframes slideDownFadeIn
+  0%
+    opacity: 0
+    transform: translateY(30%)
+  100%
+    opacity: 1
+    transform: translateY(160%)
+
+@keyframes slideFromAbove
+  0%
+    opacity: 0
+    transform: translateY(-30%)
+  100%
+    opacity: 1
+    transform: translateY(0%)

@@ -73,10 +73,37 @@ export class apiService {
         return this.api.get(`/post/postsByCircle/${id}`);
     }
 
+    public async sendPost(post_content: string, type: number, circle_id: number | undefined) {
+        this.setToken();
+        return this.api.post('/post/createPost', {
+            post_content: post_content,
+            type: type,
+            circle_id: circle_id,
+        });
+    }
+
+    public async uploadImage(formData: FormData, circle_id: number | undefined){
+        this.setToken();
+
+        formData.append('circle_id', String(circle_id)); // Añade circle_id al formData
+
+        return this.api.post('/post/createImagePost', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Cambia el encabezado solo para esta solicitud
+                'Accept': 'application/json',
+            },
+        });
+    }
+
     ////////// User
 
     public async getUserInfo(id: number) {
         return this.api.get(`/user/user/${id}`);
+    }
+
+    public async checkAuth() {
+        this.setToken();
+        return this.api.post('/user/verify');
     }
 
 }

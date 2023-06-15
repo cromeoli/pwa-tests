@@ -3,6 +3,7 @@
         <Post v-if="authIsClosed && posts.length > 0"
               :currentPostInfo.sync="currentPost"
               @changePost="nextPost"
+              :class="{ 'slideFromAbove': slideFromAboveAnimation }"
         />
         <LoadingPost v-if="authIsClosed && posts.length <= 0"/>
         <AuthBox v-if="!authIsClosed"
@@ -29,6 +30,7 @@
             />
             <UploadButton v-if="circleCollapsed"
                           :currentCircle="currentCircle"
+                          @contentUpload="loadPosts"
             />
             <MainMenu v-if="circleCollapsed"/>
         </nav>
@@ -68,6 +70,8 @@ export default {
     data() {
         return {
             authClicked: 0,
+            slideDownAnimation: false,
+            slideFromAboveAnimation: false,
             authIsClosed: true,
             userAuthenticated: false,
             circleMenuIsOpen: false,
@@ -85,13 +89,14 @@ export default {
         };
     },
     beforeMount() {
+        this.checkAuth();
         this.setCurrentCircle(1);
         this.loadPosts();
     },
     watch: {
         currentCircleId() {
             this.loadPosts();
-        }
+        },
     },
     methods: {
         toggleAuthMenu(buttonId: number) {
@@ -129,8 +134,11 @@ export default {
             this.currentCircleId = circleId;
         },
         loadPosts() {
+            console.log("loadPosts");
             this.API.getPostsByCircle(this.currentCircleId).then((response) => {
                 this.posts = response.data.posts;
+                // reverse post order
+                this.posts.reverse();
                 this.setCurrentPost(0);
             });
         },
@@ -140,11 +148,36 @@ export default {
         },
         nextPost(){
             if(this.currentPostIndex < this.posts.length - 1){
-                this.setCurrentPost(this.currentPostIndex + 1);
+                this.slideFromAboveAnimation = true;
+                setTimeout(() => {
+                    this.setCurrentPost(this.currentPostIndex + 1);
+                }, 100);
+
+                setTimeout(() => {
+                    this.slideFromAboveAnimation = false;
+                }, 1200);
             } else {
+                this.slideFromAboveAnimation = true;
                 this.setCurrentPost(0);
+                setTimeout(() => {
+                    this.slideFromAboveAnimation = false;
+                }, 1200);
             }
         },
+        checkAuth() {
+            this.API.checkAuth()
+                .then((response) => {
+                    // Si el código de estado es 200, el usuario está autenticado; de lo contrario, no está autenticado
+                    this.userAuthenticated = response.status === 200;
+                })
+                .catch((error) => {
+                    if (error.response && error.response.status === 401) {
+                        console.log("No autenticado");
+                    } else {
+                        console.log(error);
+                    }
+                });
+        }
     }
 };
 </script>
