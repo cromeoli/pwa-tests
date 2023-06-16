@@ -45,7 +45,7 @@ export default defineComponent({
                 </div>
             </div>
 
-        <RouterLink to="/test" class="circleMenu__findCircles">
+        <RouterLink to="/findCircles" class="circleMenu__findCircles">
             Encuentra círculos
         </RouterLink>
         <div class="circleMenu__InputWrapper">

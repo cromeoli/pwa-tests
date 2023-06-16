@@ -64,6 +64,7 @@ export default defineComponent({
         <div class="uploadMainframe" v-if="modalOpen">
             <div class="uppBox uppBox--pink modalConfirm">
                 {{ `Seguro que quieres irte del círculo ${selectedCircleName}?` }}
+                <span v-if="selectedCircleName == 'Global'">No puedes escapar del círculo global. Él te encontrará</span>
                 <div>
                     <button @click="leaveCircle">Sí</button>
                     <button @click="closeModal">No</button>

@@ -61,6 +61,11 @@ export class apiService {
         return this.api.get('/circle/myCircles');
     }
 
+    public async getAllCircles() {
+        this.setToken();
+        return this.api.get('/circle/circles');
+    }
+
     public async getOneCircle(id: number) {
         this.setToken();
         return this.api.get(`/circle/circle/${id}`);
@@ -78,6 +83,11 @@ export class apiService {
             description: 'a',
             is_private: 0,
         });
+    }
+
+    public async joinCircle(id: number) {
+        this.setToken();
+        return this.api.post(`/circle/joinCircle/${id}`);
     }
 
     ////////// Posts

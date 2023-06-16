@@ -10,7 +10,9 @@ export default {
                 document.body.style.backgroundColor = "#F4E401";
             } else if (to.path === "/circles") {
                 document.body.style.backgroundColor = "#06B1B3";
-            } else {
+            } else if (to.path === "/findCircles") {
+                document.body.style.backgroundColor = "#06B1B3";
+            }else{
                 document.body.style.backgroundColor = "#F4E401";
             }
         },
