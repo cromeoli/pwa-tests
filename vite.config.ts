@@ -18,13 +18,13 @@ export default defineConfig({
         short_name: "Upp",
         icons:[
           {
-          src: "public/icons/icon512.png",
+          src: "/icons/icon512.png",
           sizes: '512x512',
           type: 'image/png',
           purpose: 'any maskable',
           },
           {
-            src: "public/icons/icon192.png",
+            src: "/icons/icon192.png",
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any maskable',
