@@ -1,0 +1,92 @@
+.circles
+  height: 100%
+  background-color: $co_yellowSimpson
+  &__circleCardContainer
+    padding: 1em
+    height: 90%
+    width: 100%
+    overflow-y: auto
+    border: solid 3px $co_blackKnight
+    border-radius: 12px
+    background-color: $co_yellowSimpson--dark
+    & div
+      display: flex
+      gap: .5em
+      height: 16%
+      margin-top: 1em
+      font-family: $fo_provicali
+      & svg
+        width: 1.5em
+        height: 1.5em
+      & h3
+        flex-grow: 1
+
+
+.modalConfirm
+  display: flex
+  flex-direction: column
+  font-family: $fo_archivo
+  max-width: 500px
+  & div
+    margin-top: 1em
+    display: flex
+    gap: 1em
+    & button
+      padding: .5em 1em
+      background-color: black
+      color: white
+      width: 4em
+
+.circlesNavigation
+  display: flex
+  gap: 1em
+  height: 6em
+  width: 100%
+
+.createCircleForm
+  position: relative
+  display: flex
+  flex-direction: column
+  gap: 1em
+  padding: 2em
+  max-width: 500px
+  & svg
+    position: absolute
+    left: 1em
+    top: 1em
+    width: 2em
+    height: 1em
+
+  & p
+    font-family: $fo_archivo
+  & h2
+    font-family: $fo_provicali
+  & button
+    padding: .5em 1em
+    background-color: black
+    color: white
+
+
+
+
+.createCircle
+  display: flex
+  gap: 10px
+  flex-grow: 1
+  white-space: nowrap
+  transition: .3s
+  & svg
+    width: 2em
+    height: 2em
+  & h2
+    font-family: $fo_provicali
+    font-size: 1.6em
+    @media (max-width: 380px)
+      font-size: 1.7rem
+    @media (max-width: 350px)
+      font-size: 1.5rem
+    @media (max-width: 350px)
+      font-size: 1.3rem
+
+.flexMini
+  flex: 0 0 20%

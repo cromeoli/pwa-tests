@@ -51,6 +51,11 @@ export default defineComponent({
         <div class="uppBox--blue mainMenu"
              :class="isMenuOpen ? 'open' : 'close'"
         >
+            <RouterLink to="/" class="mainMenu__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+                    <path d="M4 0l-4 3h1v4h2v-2h2v2h2v-4.03l1 .03-4-3z" />
+                </svg>
+            </RouterLink>
             <RouterLink to="#" class="mainMenu__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
                     <path d="M4 0c-1.1 0-2 1.12-2 2.5s.9 2.5 2 2.5 2-1.12 2-2.5-.9-2.5-2-2.5zm-2.09 5c-1.06.05-1.91.92-1.91 2v1h8v-1c0-1.08-.84-1.95-1.91-2-.54.61-1.28 1-2.09 1-.81 0-1.55-.39-2.09-1z" />
@@ -77,7 +82,7 @@ export default defineComponent({
                     <path d="M20 9H38V16H20V9Z" fill="black"/>
                 </svg>
             </RouterLink>
-            <RouterLink to="#" class="mainMenu__icon">
+            <RouterLink to="/circles" class="mainMenu__icon">
                 <svg viewBox="0 0 36 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M31.8707 17C31.8707 9.67325 25.6514 3.5 17.6854 3.5C9.71934 3.5 3.5 9.67325 3.5 17C3.5 24.3268 9.71934 30.5 17.6854 30.5C25.6514 30.5 31.8707 24.3268 31.8707 17Z" stroke="black" stroke-width="7"/>
                 </svg>

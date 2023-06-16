@@ -13,8 +13,8 @@
                     <img :src="currentPostInfo.user.avatar" alt="">
                     <h1> {{ currentPostInfo.user.nickname }} </h1>
                 </div>
-                <div class="post__content">
-                    <div v-if="currentPostInfo?.type === 1">{{ currentPostInfo.post_content }}</div>
+                <div v-if="currentPostInfo?.type === 1" class="post__content">
+                    {{ currentPostInfo.post_content }}
                 </div>
                 <img class="post__image"
                      v-if="currentPostInfo.type === 2"

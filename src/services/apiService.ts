@@ -66,6 +66,20 @@ export class apiService {
         return this.api.get(`/circle/circle/${id}`);
     }
 
+    public async leaveCircle(id: number) {
+        this.setToken();
+        return this.api.delete(`/circle/leaveCircle/${id}`);
+    }
+
+    public async createCircle(name: string) {
+        this.setToken();
+        return this.api.post('/circle/createCircle', {
+            name: name,
+            description: 'a',
+            is_private: 0,
+        });
+    }
+
     ////////// Posts
 
     public async getPostsByCircle(id: number) {
