@@ -32,7 +32,9 @@
                           :currentCircle="currentCircle"
                           @contentUpload="loadPosts"
             />
-            <MainMenu v-if="circleCollapsed"/>
+            <MainMenu v-if="circleCollapsed"
+                      @logout="logout"
+            />
         </nav>
 
         <RegisterButtons v-else @buttonPressed="toggleAuthMenu"/>
@@ -99,6 +101,10 @@ export default {
         },
     },
     methods: {
+        logout() {
+            this.userAuthenticated = false;
+            localStorage.clear();
+        },
         toggleAuthMenu(buttonId: number) {
             if (this.authIsClosed || this.authClicked == buttonId) {
                 this.authIsClosed = !this.authIsClosed;

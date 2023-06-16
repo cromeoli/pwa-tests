@@ -93,6 +93,10 @@ export default defineComponent({
                     />
                 </svg>
             </RouterLink>
+            <svg @click="$emit('logout')" class="mainMenu__icon" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+                <path d="M3 0v1h4v5h-4v1h5v-7h-5zm-1 2l-2 1.5 2 1.5v-1h4v-1h-4v-1z" />
+            </svg>
+
             <div class="mainMenu__closeIcon" :class="{ 'mainMenu__icon--anim': anim }" @click="closeMenu">
                 <svg class="mainMenu__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8">
                     <path d="M4 0l-4 4h8l-4-4z" transform="translate(0 2)" />
