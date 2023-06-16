@@ -32,7 +32,7 @@ export default defineComponent({
                     }
                 })
         },
-        openDeleteModal(circleId, circleName) {
+        openDeleteModal(circleId: number, circleName: string) {
             this.selectedCircleId = circleId;
             this.selectedCircleName = circleName;
             this.modalOpen = true;
