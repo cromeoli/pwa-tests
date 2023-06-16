@@ -1,18 +1,22 @@
-# Vue 3 + TypeScript + Vite
+<div align="center"><img src="https://github.com/cromeoli/upp-backend-laravel/assets/92324278/fa030cf2-b533-41af-8162-063937f98c94"></div>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Instalación
 
-## Recommended IDE Setup
+Para instalar el frontend tan solo es necesario seguir los siguientes pasos:
+1. Clonar mediante git u otro sistema de control de versiones el proyecto desde la siguiente URL: https://github.com/cromeoli/pwa-tests.git
+2. Una vez clonado el proyecto, debemos ubicarnos en el directorio donde lo hemos clonado y entrar a la carpeta raíz del proyecto. Una vez dentro ejecutamos el siguiente comando:  
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+```
+npm install
+```
 
-## Type Support For `.vue` Imports in TS
+3. Con el anterior comando deberíamos de haber instalado las dependencias para nuestro proyecto. A continuación para lanzar el proyecto en nuestra máquina para poder verlo desde el navegador será necesario hacer lo siguiente:
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+```
+npm run dev -- --host
+```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Habiendo seguido estos pasos debería ser posible ver lanzado el proyecto en localhost:3000 (o 3001/3002… dependiendo de si están ocupados se intentará levantar el servidor en cualquiera de los puertos posteriores al 3000 que estén disponibles).
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+#### Nota
+Es importante saber que en el archivo /src/environments/environment.ts se encuentran 2 variables importantes: API e IMAGE. Habrá 4 variables, 2 API y 2 IMAGE, pero una de cada una debería estar comentada. Este archivo establece la ruta a la que las peticiones se van a hacer, al servidor de nuestra maquina local (localhost) o al servidor en railway desplegado.
